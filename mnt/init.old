@@ -1,5 +1,0 @@
-#!/bin/sh
-
-echo -e "\nBoot took $(cut -d' ' -f1 /proc/uptime) seconds\n"
-
-exec /bin/sh

@@ -1,24 +1,37 @@
-[BITS 32]
-[EXTERN kstart] ; Kernel C start function
+bits 32
 
-HEADER_MAGIC	equ 0x1badb002
-HEADER_FLAGS	equ 0x00
-HEADER_CHECK	equ -(HEADER_MAGIC + HEADER_FLAGS)
-VIRTUAL_BASE	equ 0xC0000000
+section .text
+  align 4
+  dd 0x1badb002
+  dd 0x0
+  dd - (0x1badb002 + 0x0)
 
-[SECTION .text]
-ALIGN		4
-multiboot_header:
-  dd		HEADER_MAGIC
-  dd		HEADER_FLAGS
-  dd		HEADER_CHECK
+global start
+global rd_port
+global wr_port
 
-[GLOBAL start] ; Kernel ASM entry point
-start equ _start
-_start:
-  add  ebx, VIRTUAL_BASE
-  push esp     ; stack address
-  push ebx     ; multiboot information
-  push eax     ; magic
-  call kstart  ; kernel entry point
-  jmp  $       ; infinite loop
+extern kstart ; c entry point
+
+rd_port:
+  mov edx, [esp + 4]
+  in  al, dx
+  ret
+
+wr_port:
+  mov edx, [esp + 4]
+  mov al,  [esp + 4 + 4]
+  out dx,  al
+  ret
+
+start:
+  cli
+  mov  esp, stack_space
+  push ebx
+  push eax
+  call kstart
+  hlt
+
+section .bss
+  resb 8192
+
+stack_space:

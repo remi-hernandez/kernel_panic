@@ -29,6 +29,9 @@ printk(char const * s, ...)
                     str = va_arg(args, char *);
                     puts(str);
                     break;
+                case 'x':
+                    val = va_arg(args, int);
+                    putnbr_base(val, HEX_BASE);
                 default:
                     putc(s[i]);
                     break;

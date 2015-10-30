@@ -42,6 +42,6 @@ fclean: clean
 re: fclean all
 
 qemu:
-	qemu-system-i386 -kernel $(KERNEL)
+	qemu-system-i386 -serial stdio -kernel $(KERNEL)
 
 .PHONY: all clean fclean re

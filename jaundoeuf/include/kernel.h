@@ -9,6 +9,6 @@
 
 #define VIRTUAL_BASE 0x0
 #define MULTIBOOT_MAGIC 0x2badb002
-#define PANIC(msg) do { puts(ERR msg); while (1); } while (0);
+#define PANIC(msg) do { puts(ERR_COLOR msg); while (1); } while (0);
 
 #endif

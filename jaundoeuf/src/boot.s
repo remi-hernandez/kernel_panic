@@ -7,17 +7,19 @@ section .text
   dd - (0x1badb002 + 0x0)
 
 global start
-global rd_port
-global wr_port
+global inb
+global outb
 
 extern kstart ; c entry point
 
-rd_port:
+; serial port
+
+inb:
   mov edx, [esp + 4]
   in  al, dx
   ret
 
-wr_port:
+outb:
   mov edx, [esp + 4]
   mov al,  [esp + 4 + 4]
   out dx,  al

@@ -7,6 +7,7 @@ SECTIONS
 
   .text :
   {
+    *(.multiboot)
     *(.text)
   }
 
@@ -22,6 +23,8 @@ SECTIONS
 
   .bss :
   {
+    *(COMMON)
     *(.bss)
+    *(.stack)
   }
 }

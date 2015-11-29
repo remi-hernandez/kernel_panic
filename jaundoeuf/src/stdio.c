@@ -7,16 +7,12 @@ void
 putc(char c)
 {
     vfb_write(&c, 1);
-    serial_putc(COM1, c);
 }
 
 void
 puts(const char * s)
 {
     vfb_write(s, strlen(s));
-
-    for (int i = 0; i < strlen(s); ++i)
-      serial_putc(COM1, s[i]);
 }
 
 void

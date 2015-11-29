@@ -55,8 +55,9 @@ static inline char _handle_color_seq(void)
     char * str = g_vfb.esc_buf;
     int codes[3] = { 0, 0, 0 };
     int i = 1, j = 0;
+    char stop = 0;
 
-    for (char stop = 0; !stop; ++j)
+    for (; !stop; ++j)
     {
         if (j >= 3)
             return (0);
@@ -102,7 +103,9 @@ static inline void _back_cursor(void)
 
 static inline void _scroll_up(void)
 {
-    for (int i = 0; i < NB_LINE * NB_COLUMN; ++i)
+    int i;
+
+    for (i = 0; i < NB_LINE * NB_COLUMN; ++i)
     {
         if (i < (NB_LINE - 1) * NB_COLUMN)
             g_vfb.base[i] = g_vfb.base[i + NB_COLUMN];
@@ -163,4 +166,10 @@ vfb_write(const char * s, size_t count)
     }
 
     return (i);
+}
+
+void
+vfb_clear(void)
+{
+   memset(VID_FRAME_BUF, 0, NB_LINE * NB_COLUMN);
 }
